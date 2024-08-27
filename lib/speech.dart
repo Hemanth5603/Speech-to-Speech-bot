@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:record/record.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:tensorgo_speech_chatbot/controllers/user_controller.dart';
+import 'package:tensorgo_speech_chatbot/services/audio_recorder.dart';
 import 'package:tensorgo_speech_chatbot/services/groq_service.dart';
 import 'package:text_gradiate/text_gradiate.dart';
 
@@ -16,9 +21,11 @@ class Speech extends StatefulWidget {
 class _SpeechState extends State<Speech> {
   final UserController userController = Get.put(UserController());
   final GroqService groqService = Get.put(GroqService());
+  final VoiceRecorder voiceRecorder = Get.put(VoiceRecorder());
   final SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   bool isListening = false;
+  
 
   @override
   void initState() {
@@ -71,6 +78,15 @@ class _SpeechState extends State<Speech> {
     _stopListening();
   }
 }
+
+
+
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -156,16 +172,18 @@ class _SpeechState extends State<Speech> {
                       size: 30,
                     ),
                     onPressed: () {
+                      //voiceRecorder.record();
                       if (_speechEnabled) {
                         setState(() {
                           print("Speech recognition button pressed");
                           _speechToText.isNotListening ? _startListening() : _stopListening();
-                          userController.userInput.text = "";
+                          //userController.userInput.text = "";
                         });
                       } else {
                         print("Speech recognition is not ready yet");
                         // Optionally, show a message to the user here
                       }
+                      
                     },
                   ),
                 ),
