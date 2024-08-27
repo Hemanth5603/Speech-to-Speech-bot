@@ -1,8 +1,8 @@
 # tensorgo_speech_chatbot
 
+Here You can access and install the APK
 APK Link - https://drive.google.com/file/d/1lfuZEdKmR3Mw9a_pOkZRReAEOL4vH0mq/view?usp=sharing
 
-Installation steps
 
-
+Here is the System Architecture
 ![diagram-export-8-27-2024-4_39_18-PM](https://github.com/user-attachments/assets/383879e7-9195-4314-ac26-3ddf80d7bc61)
