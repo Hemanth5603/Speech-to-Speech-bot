@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:tensorgo_speech_chatbot/models/model_response.dart';
 
 
-class UserController extends GetxController{
+class ChatController extends GetxController{
   final FlutterTts _flutterTts = FlutterTts();
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -23,7 +23,7 @@ class UserController extends GetxController{
 Future<void> generateResponse() async {
   final uri = Uri.parse("https://speech-to-speech-tensorgo.onrender.com/chat");
 
-  print(userInput.text.toString());
+  print("During api call - ${userInput.text.toString()}");
 
   Map<String, String> request = {
     "message": userInput.text.toString(),

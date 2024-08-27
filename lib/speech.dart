@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
-import 'package:tensorgo_speech_chatbot/controllers/user_controller.dart';
+import 'package:tensorgo_speech_chatbot/controllers/chat_controller.dart';
 import 'package:tensorgo_speech_chatbot/services/audio_recorder.dart';
 import 'package:tensorgo_speech_chatbot/services/groq_service.dart';
 import 'package:text_gradiate/text_gradiate.dart';
@@ -19,7 +19,7 @@ class Speech extends StatefulWidget {
 }
 
 class _SpeechState extends State<Speech> {
-  final UserController userController = Get.put(UserController());
+  final ChatController chatController = Get.put(ChatController());
   final GroqService groqService = Get.put(GroqService());
   final VoiceRecorder voiceRecorder = Get.put(VoiceRecorder());
   final SpeechToText _speechToText = SpeechToText();
@@ -31,7 +31,7 @@ class _SpeechState extends State<Speech> {
   void initState() {
     super.initState();
     _initSpeech();
-    userController.userInput.text = "";
+    chatController.userInput.text = "";
   }
 
   Future<void> _initSpeech() async {
@@ -41,7 +41,7 @@ class _SpeechState extends State<Speech> {
   }
 
   void _startListening() async {
-    userController.stop();
+    chatController.stop();
     if (_speechEnabled) {
       await _speechToText.listen(onResult: _onSpeechResult);
       setState(() {
@@ -60,18 +60,18 @@ class _SpeechState extends State<Speech> {
     });
     
     // Print the recognized text
-    print("Final recognized text: ${userController.userInput.text.toString()}");
+    print("Final recognized text: ${chatController.userInput.text.toString()}");
 
     // Call the Groq service to send the message and generate the response
-    //groqService.sendMessage(userController.userInput.text.toString());
-    userController.generateResponse();
+    //groqService.sendMessage(chatController.userInput.text.toString());
+    chatController.generateResponse();
   }
 
   void _onSpeechResult(SpeechRecognitionResult result) {
   setState(() {
-    userController.userInput.text = result.recognizedWords;
+    chatController.userInput.text = result.recognizedWords;
   });
-  print("Recognized words: ${userController.userInput.text}");
+  print("Recognized words: ${chatController.userInput.text}");
 
   // Check if the final result is provided (or if confidence is high)
   if (result.finalResult) {
@@ -131,7 +131,7 @@ class _SpeechState extends State<Speech> {
               height: 110,
               padding: const EdgeInsets.only(left:20, top:20, right: 20, bottom: 0),
               child: Text(
-                userController.userInput.text.toString(),
+                chatController.userInput.text.toString(),
                 style: const TextStyle(
                   color: Colors.white,
                   fontFamily: 'man-sb',
@@ -142,10 +142,10 @@ class _SpeechState extends State<Speech> {
             Obx(() =>
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: 450,
+                height: 480,
                 padding:const EdgeInsets.all(20),
                 child: SingleChildScrollView(
-                  child: Text(userController.result.value.toString(),
+                  child: Text(chatController.result.value.toString(),
                     style: const TextStyle(
                       color: Colors.white,
                       fontFamily: 'man-r',
@@ -177,7 +177,7 @@ class _SpeechState extends State<Speech> {
                         setState(() {
                           print("Speech recognition button pressed");
                           _speechToText.isNotListening ? _startListening() : _stopListening();
-                          //userController.userInput.text = "";
+                          //chatController.userInput.text = "";
                         });
                       } else {
                         print("Speech recognition is not ready yet");
