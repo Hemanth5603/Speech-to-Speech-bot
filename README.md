@@ -1,5 +1,5 @@
 # tensorgo_speech_chatbot
-
+Note: The Server reponse might delay at times since I have used free instance on Render for deployment
 Here You can access and install the APK <br/>
 APK Link - https://drive.google.com/file/d/1lfuZEdKmR3Mw9a_pOkZRReAEOL4vH0mq/view?usp=sharing
 
